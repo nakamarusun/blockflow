@@ -1,0 +1,5 @@
+{
+    "presets": [
+        "react-app" // More complete compared to @babel/react and supports TS straight up
+    ]
+}
