@@ -1,6 +1,6 @@
 {
     "root": true,
-    "env": {
+    "env": { // Environment that the code will run in
         "browser": true,
         "jest": true,
         "es6": true,
@@ -10,22 +10,37 @@
         "eslint:recommended",
         "plugin:import/errors",
         "plugin:import/warnings",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/recommended"
         // "plugin:jest/recommended"
     ],
-    // "parser": "@babel/eslint-parser",
-    "parserOptions": {
-        "ecmaVersion": 2018,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        }
-    },
     "plugins": [],
-    "rules": {},
+    "rules": {
+        "indent": [ // Enforce indentation rules
+            "warn",
+            2
+        ]
+    },
+    "overrides": [
+        {
+            "files": [ // Checks the following file formats in the src folder (Must)
+                "src/**/*.{ts,tsx,js,jsx}"
+            ]
+        }
+    ],
     "settings": {
         "react": {
-            "version": "detect"
+            "version": "detect" // Auto detect react version
+        },
+        "import/resolver": {
+            "node": {
+                "extensions": [ // Don't throw error when importing these files
+                    ".js",
+                    ".jsx",
+                    ".ts",
+                    ".tsx"
+                ]
+            }
         }
     }
 }

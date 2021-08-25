@@ -12,24 +12,28 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
-        publicPath: '',
+        publicPath: '/',
     },
     devServer: {
+        historyApiFallback: true, // When not found, goes to index.html, not webpack builtin route
         https: false,
         // compress: true,
         // proxy: localhost:xxxx,
         hot: true,
         client: {
-            overlay: true,
+            overlay: {  // Show errors in the browser
+                warnings: false,
+                errors: true,
+            },
             progress: true,
         }
     },
     plugins: [
-        new HtmlWebpackPlugin({
+        new HtmlWebpackPlugin({ // Use a single file html template
             template: "src/index.html",
             favicon: "src/favicon.png"
         }),
-        new ESLintPlugin({
+        new ESLintPlugin({  // Lints the code when packing
             extensions: ['ts', 'tsx'],
             exclude: ['/node_modules/', '/dist/']
         }),
@@ -45,9 +49,10 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"],
-                include: path.resolve(__dirname, 'src'),
-                exclude: /node_modules/,
             }
         ],
+    },
+    resolve: {
+        extensions: [".js", ".json", ".ts", ".tsx"], // So we can import tsx files
     },
 }
