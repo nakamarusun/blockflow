@@ -5,6 +5,7 @@ const Header: React.FC = () => {
   return (
     <nav>
       <div className="nav-wrapper deep-purple lighten-1">
+        <a className="brand-logo center">BlockFlow</a>
         <ul id="nav-mobile" className="left">
           <li><NavLink to="/" activeClassName="light-blue lighten-1" exact>Home</NavLink></li>
           <li><NavLink to="/notes" activeClassName="light-blue lighten-1">Notes</NavLink></li>

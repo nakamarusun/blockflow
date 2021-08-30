@@ -10,7 +10,6 @@ const App: React.FC = () => {
   return (
     <div>
       <Header />
-      <h1 className="center">BlockFlow!</h1>
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/about" component={AboutPage} />

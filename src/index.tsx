@@ -2,10 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './components/App';
-import '@materializecss/materialize/dist/css/materialize.min.css';
+import configureStore from "./redux/configureStore";
+import { Provider } from 'react-redux'
+
+const store = configureStore();
 
 ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById("yes"));
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("yes")
+);
