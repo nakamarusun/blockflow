@@ -1,9 +1,13 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { createNote } from "../redux/actions/noteActions";
 
 class NotesPage extends React.Component {
   state = {
     note: {
       title: "",
+      content: "",
     }
   };
 
@@ -15,7 +19,7 @@ class NotesPage extends React.Component {
 
   handleSubmit = (event: React.ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    alert(`You are epic. Here is your title ${this.state.note.title}`)
+    this.props.createNote(this.state.note);
   }
 
   render(): JSX.Element {
@@ -26,7 +30,7 @@ class NotesPage extends React.Component {
         <h2 className="center">
           Notes
         </h2>
-        <div className="container row">
+        <section id="newNote" className="container row">
           <form className="col s12 row" onSubmit={this.handleSubmit}>
             <div className="input-field">
               <div className="col s5 offset-s3">
@@ -47,10 +51,36 @@ class NotesPage extends React.Component {
               </button>
             </div>
           </form>
-        </div>
+        </section>
+        <section id="notes" className="row container">
+          {this.props.notes.map(note => (
+            <div key={note.title} className="col s3">
+              <div className="card-panel blue">
+                {note.title}
+              </div>
+            </div>
+          ))}
+        </section>
       </div>
     )
   }
 }
 
-export default NotesPage;
+NotesPage.propTypes = {
+  createNote: PropTypes.func.isRequired,
+  notes: PropTypes.array.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    notes: state.notes
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createNote: note => dispatch(createNote(note))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NotesPage);
