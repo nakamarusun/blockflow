@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createNote } from "../redux/actions/noteActions";
+import { bindActionCreators } from "redux";
 
 class NotesPage extends React.Component {
   state = {
@@ -19,7 +20,7 @@ class NotesPage extends React.Component {
 
   handleSubmit = (event: React.ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    this.props.createNote(this.state.note);
+    this.props.actions.createNote(this.state.note);
   }
 
   render(): JSX.Element {
@@ -67,7 +68,7 @@ class NotesPage extends React.Component {
 }
 
 NotesPage.propTypes = {
-  createNote: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
   notes: PropTypes.array.isRequired,
 }
 
@@ -79,7 +80,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    createNote: note => dispatch(createNote(note))
+    actions: bindActionCreators(createNote, dispatch)
   }
 }
 

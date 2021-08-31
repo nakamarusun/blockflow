@@ -1,6 +1,8 @@
+import { Notes } from "./actionTypes";
+
 export function createNote(note: Note): NoteAction {
   return {
-    type: "CREATE_NOTE",
+    type: Notes.CREATE,
     note
   };
 }
