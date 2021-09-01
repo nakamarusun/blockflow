@@ -14,17 +14,19 @@ class NotesPage extends React.Component {
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
-    const note = { ...this.state.note, title: event.target.value };
+    const note = { ...this.state.note, content: event.target.value };
     this.setState({ note });
   }
 
   handleSubmit = (event: React.ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
     this.props.actions.createNote(this.state.note);
+
+    this.setState({note: {content: "", title: ""}});
   }
 
   render(): JSX.Element {
-    const flavor = `Create a memorable title.`;
+    const flavor = `Note down anything.`;
 
     return (
       <div>
@@ -36,16 +38,16 @@ class NotesPage extends React.Component {
             <div className="input-field">
               <div className="col s5 offset-s3">
                 <i className="material-icons prefix">note_add</i>
-                <input
+                <textarea
                   onChange={this.handleChange}
-                  value={this.state.note.title}
+                  value={this.state.note.content}
                   placeholder={flavor}
                   id="first_name"
                   type="text"
-                  className="validate"
+                  className="materialize-textarea"
                 />
 
-                <label htmlFor="first_name">Title</label>
+                <label htmlFor="first_name">Content</label>
               </div>
               <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                 <i className="material-icons right">save</i>
@@ -55,9 +57,9 @@ class NotesPage extends React.Component {
         </section>
         <section id="notes" className="row container">
           {this.props.notes.map(note => (
-            <div key={note.title} className="col s3">
+            <div key={(Math.random()*10000).toPrecision(5)} className="col s3">
               <div className="card-panel blue">
-                {note.title}
+                {note.content}
               </div>
             </div>
           ))}
@@ -80,7 +82,9 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(createNote, dispatch)
+    actions: bindActionCreators({
+      createNote
+    }, dispatch)
   }
 }
 
