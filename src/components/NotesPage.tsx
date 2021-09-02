@@ -12,9 +12,15 @@ class NotesPage extends React.Component {
     }
   };
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  handleChangeContent = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
     const note = { ...this.state.note, content: event.target.value };
+    this.setState({ note });
+  }
+
+  handleChangeTitle = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    event.preventDefault();
+    const note = { ...this.state.note, title: event.target.value };
     this.setState({ note });
   }
 
@@ -34,22 +40,36 @@ class NotesPage extends React.Component {
           Notes
         </h2>
         <section id="newNote" className="container row">
-          <form className="col s12 row" onSubmit={this.handleSubmit}>
-            <div className="input-field">
-              <div className="col s5 offset-s3">
+          <form className="col s12" onSubmit={this.handleSubmit}>
+            <div className="row">
+              <div className="input-field col s4 offset-s2">
                 <i className="material-icons prefix">note_add</i>
+                <input
+                  id="note-title"
+                  type="text"
+                  className="validate"
+                  onChange={this.handleChangeTitle}
+                  value={this.state.note.title}
+                />
+                <label htmlFor="note-title">Title</label>
+              </div>
+            </div>
+            <div className="input-field row">
+              <div className="col s8 offset-s2">
+                <i className="material-icons prefix">edit</i>
                 <textarea
-                  onChange={this.handleChange}
+                  onChange={this.handleChangeContent}
                   value={this.state.note.content}
                   placeholder={flavor}
-                  id="first_name"
+                  id="note-content"
                   type="text"
                   className="materialize-textarea"
                 />
-
-                <label htmlFor="first_name">Content</label>
+                <label htmlFor="note-content">Content</label>
               </div>
-              <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+            </div>
+            <div className="row">
+              <button className="col offset-s8 s2 btn waves-effect waves-light" type="submit" name="action">Submit
                 <i className="material-icons right">save</i>
               </button>
             </div>
@@ -58,8 +78,11 @@ class NotesPage extends React.Component {
         <section id="notes" className="row container">
           {this.props.notes.map(note => (
             <div key={(Math.random()*10000).toPrecision(5)} className="col s3">
-              <div className="card-panel blue">
-                {note.content}
+              <div className="card blue">
+                <div className="card-content">
+                  <span className="card-title">{note.title}</span>
+                  <p>{note.content}</p>
+                </div>
               </div>
             </div>
           ))}
