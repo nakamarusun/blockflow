@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { createNote } from "../redux/actions/noteActions";
+import { createNote, loadNotes } from "../redux/actions/noteActions";
 import { bindActionCreators } from "redux";
 
 class NotesPage extends React.Component {
@@ -11,6 +11,12 @@ class NotesPage extends React.Component {
       content: "",
     }
   };
+
+  componentDidMount() {
+    this.props.actions.loadNotes().catch(err => {
+      alert("Error fetching notes " + err)
+    });
+  }
 
   handleChangeContent = (event: React.ChangeEvent<HTMLInputElement>): void => {
     event.preventDefault();
@@ -106,7 +112,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
-      createNote
+      createNote,
+      loadNotes
     }, dispatch)
   }
 }

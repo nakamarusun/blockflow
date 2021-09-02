@@ -13,7 +13,7 @@ const notes = [
   },
   {
     id: "a8f92j",
-    title: "🏳‍🌈",
+    title: "🌈",
     content: "Gay Declaration Day to blockflow.web.app",
     authorId: 3,
   },

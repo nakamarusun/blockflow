@@ -3,6 +3,12 @@ const server = jsonServer.create();
 const path = require("path");
 const router = jsonServer.router(path.join(__dirname, "db.json"));
 
+// Includes CORS * thingy
+const middlewares = jsonServer.defaults();
+
+// Set default middlewares (logger, static, cors and no-cache)
+server.use(middlewares);
+
 // To handle POST, PUT and PATCH you need to use a body-parser. Using JSON Server's bodyParser
 server.use(jsonServer.bodyParser);
 
