@@ -123,6 +123,6 @@ out
 .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/node
-
+dist
 .vscode/
 tools/fakeApi/db.json
