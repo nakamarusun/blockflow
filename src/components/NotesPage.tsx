@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createNote, loadNotes } from "../redux/actions/noteActions";
 import { bindActionCreators } from "redux";
+import NotesList from "./NotesList";
+import { loadAuthors } from "../redux/actions/authorActions";
 
 class NotesPage extends React.Component {
   state = {
@@ -13,8 +15,13 @@ class NotesPage extends React.Component {
   };
 
   componentDidMount() {
-    this.props.actions.loadNotes().catch(err => {
+    if (this.props.notes.length !== 0) return;
+    const { loadNotes, loadAuthors } = this.props.actions;
+    loadNotes().catch(err => {
       alert("Error fetching notes " + err)
+    });
+    loadAuthors().catch(err => {
+      alert("Error fetching authors " + err)
     });
   }
 
@@ -81,18 +88,7 @@ class NotesPage extends React.Component {
             </div>
           </form>
         </section>
-        <section id="notes" className="row container">
-          {this.props.notes.map(note => (
-            <div key={(Math.random()*10000).toPrecision(5)} className="col s3">
-              <div className="card blue">
-                <div className="card-content">
-                  <span className="card-title">{note.title}</span>
-                  <p>{note.content}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </section>
+        <NotesList notes={this.props.notes}></NotesList>
       </div>
     )
   }
@@ -101,11 +97,19 @@ class NotesPage extends React.Component {
 NotesPage.propTypes = {
   actions: PropTypes.object.isRequired,
   notes: PropTypes.array.isRequired,
+  authors: PropTypes.array.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
-    notes: state.notes
+    notes: state.authors.length === 0 ? [] : state.notes.map(course => { // Enhances the author ID to name. Very inefficient search code.
+      const authorName = state.authors.find(x => x.id === course.authorId);
+      return { 
+        ...course,
+        authorName: !authorName ? "" : authorName.name
+      };
+    }),
+    authors: state.authors,
   };
 }
 
@@ -113,7 +117,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: bindActionCreators({
       createNote,
-      loadNotes
+      loadNotes,
+      loadAuthors
     }, dispatch)
   }
 }

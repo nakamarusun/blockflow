@@ -12,7 +12,7 @@ export function createNote(note: Note): NoteAction {
 
 function loadNotesSuccess(notes) {
   return {
-    type: Notes.LOAD_COURSES_SUCCESS,
+    type: Notes.LOAD_NOTES_SUCCESS,
     notes
   }
 }

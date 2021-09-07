@@ -14,7 +14,7 @@ const notes = [
   {
     id: "a8f92j",
     title: "🌈",
-    content: "Gay Declaration Day to blockflow.web.app",
+    content: "Gay Declaration Day to glidememo.web.app",
     authorId: 3,
   },
   {
@@ -28,7 +28,7 @@ const notes = [
 const authors = [
   { id: 1, name: "Cory House" },
   { id: 2, name: "Elisa Harmon" },
-  { id: 3, name: "Adit Homo" }
+  { id: 3, name: "Some Gay Dude" },
 ];
 
 // Using CommonJS style export so we can consume via Node (without using Babel-node)
